@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://word.vinnesia.my.id/sitemap.xml
