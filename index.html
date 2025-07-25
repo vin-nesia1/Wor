@@ -23,10 +23,11 @@
         :root {
             --primary-color: #5C2D91; /* Ungu */
             --secondary-color: #2D5C40; /* Hijau kehitaman */
-            --text-color: #E0E0E0;
-            --background-color: #1A1A1A;
-            --card-background: #282828;
-            --border-color: #444;
+            --text-color: #FFFFFF; /* Putih */
+            --background-left: #2D5C40; /* Hijau kehitaman untuk kiri */
+            --background-right: #5C2D91; /* Ungu untuk kanan */
+            --card-background: rgba(0, 0, 0, 0.6); /* Sedikit transparan agar background terlihat */
+            --border-color: #666;
             --button-hover-primary: #7B4BA6;
             --button-hover-secondary: #3A7A50;
         }
@@ -39,20 +40,23 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background-color);
+            background: linear-gradient(to right, var(--background-left) 50%, var(--background-right) 50%);
             color: var(--text-color);
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            position: relative; /* Untuk pseudo-element background */
         }
 
-        header {
-            background-color: var(--primary-color);
+        /* Override body background color for header and footer to maintain solid color */
+        header, footer {
+            background-color: var(--primary-color); /* Kembali ke ungu solid */
             color: white;
             padding: 1rem 0;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 10; /* Pastikan di atas background */
         }
 
         header .container {
@@ -101,13 +105,16 @@
             margin: 0 auto;
             width: 100%;
             padding: 20px;
+            z-index: 5; /* Pastikan di atas background tapi di bawah header/footer */
         }
 
         .counter-section {
-            background-color: var(--card-background);
+            background-color: var(--card-background); /* Menggunakan card-background yang sedikit transparan */
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px); /* Efek blur pada latar belakang elemen ini */
+            -webkit-backdrop-filter: blur(5px); /* Untuk kompatibilitas Safari */
         }
 
         textarea {
@@ -117,7 +124,7 @@
             margin-bottom: 20px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            background-color: #333;
+            background-color: rgba(0, 0, 0, 0.4); /* Background textarea sedikit transparan gelap */
             color: var(--text-color);
             font-size: 1.1em;
             resize: vertical;
@@ -168,7 +175,7 @@
         }
 
         .result-item {
-            background-color: #3A3A3A;
+            background-color: rgba(0, 0, 0, 0.5); /* Background hasil sedikit transparan gelap */
             padding: 20px;
             border-radius: 8px;
             text-align: center;
@@ -181,14 +188,14 @@
 
         .result-item h3 {
             font-size: 1.1em;
-            color: var(--primary-color);
+            color: var(--primary-color); /* Warna ungu untuk judul hasil */
             margin-bottom: 10px;
         }
 
         .result-item p {
             font-size: 1.8em;
             font-weight: bold;
-            color: #E0E0E0;
+            color: var(--text-color); /* Teks hasil tetap putih */
             margin: 0;
         }
 
@@ -199,6 +206,7 @@
             padding: 1.5rem 0;
             margin-top: auto;
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 10;
         }
 
         footer .container {
@@ -248,6 +256,11 @@
 
             .results-grid {
                 grid-template-columns: 1fr;
+            }
+
+            /* Untuk mobile, background gradient bisa jadi vertikal atau tetap horizontal tapi lebih kecil */
+            body {
+                background: linear-gradient(to bottom, var(--background-left) 50%, var(--background-right) 50%);
             }
         }
 
