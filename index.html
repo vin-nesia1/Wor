@@ -13,15 +13,15 @@
       gtag('config', 'G-3PYZXZFNER');
     </script>
 
-    <title>Penghitung Kata Online Gratis: DOCX, PDF, TXT, ZIP | Word.Vinnesia.my.id</title>
-    <meta name="description" content="Penghitung kata online instan untuk DOCX, PDF, TXT, & ZIP. Hitung kata, karakter (dengan/tanpa spasi), kalimat, paragraf, serta estimasi waktu baca & bicara cepat.">
-    <meta name="keywords" content="penghitung kata online, word counter, hitung kata, hitung karakter, hitung kalimat, hitung paragraf, waktu baca, waktu bicara, upload file, hitung DOCX, hitung PDF, hitung TXT, hitung ZIP, alat gratis, Vinnesia, Vinnesia Word Counter">
+    <title>Penghitung Kata Online Canggih: DOCX, PDF, Gambar, ZIP, TXT, HTML, RTF, ODT | Word.Vinnesia.my.id</title>
+    <meta name="description" content="Penghitung kata online canggih untuk berbagai format: DOCX, PDF, Gambar (OCR), ZIP, TXT, HTML, RTF, ODT. Hitung kata, karakter, kalimat, paragraf, & waktu baca/bicara instan.">
+    <meta name="keywords" content="penghitung kata online, word counter, hitung kata, hitung karakter, hitung kalimat, hitung paragraf, waktu baca, waktu bicara, upload file, hitung DOCX, hitung PDF, hitung gambar, OCR, Tesseract, hitung ZIP, hitung TXT, hitung HTML, hitung HTM, hitung RTF, hitung ODT, MD, JSON, XML, alat gratis, Vinnesia, Vinnesia Word Counter">
     <meta name="author" content="Vinnesia">
     <link rel="canonical" href="https://word.vinnesia.my.id">
     <meta name="robots" content="index, follow">
 
-    <meta property="og:title" content="Penghitung Kata Online Gratis: DOCX, PDF, TXT, ZIP | Word.Vinnesia.my.id">
-    <meta property="og:description" content="Penghitung kata online instan untuk DOCX, PDF, TXT, & ZIP. Hitung kata, karakter (dengan/tanpa spasi), kalimat, paragraf, serta estimasi waktu baca & bicara cepat.">
+    <meta property="og:title" content="Penghitung Kata Online Canggih: DOCX, PDF, Gambar, ZIP, TXT, HTML, RTF, ODT | Word.Vinnesia.my.id">
+    <meta property="og:description" content="Penghitung kata online canggih untuk berbagai format: DOCX, PDF, Gambar (OCR), ZIP, TXT, HTML, RTF, ODT. Hitung kata, karakter, kalimat, paragraf, & waktu baca/bicara instan.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://word.vinnesia.my.id">
     <meta property="og:image" content="https://word.vinnesia.my.id/logo.png">
@@ -29,13 +29,13 @@
     <meta property="og:site_name" content="Vinnesia Word Counter">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Penghitung Kata Online Gratis: DOCX, PDF, TXT, ZIP | Word.Vinnesia.my.id">
-    <meta name="twitter:description" content="Penghitung kata online instan untuk DOCX, PDF, TXT, & ZIP. Hitung kata, karakter (dengan/tanpa spasi), kalimat, paragraf, serta estimasi waktu baca & bicara cepat.">
+    <meta name="twitter:title" content="Penghitung Kata Online Canggih: DOCX, PDF, Gambar, ZIP, TXT, HTML, RTF, ODT | Word.Vinnesia.my.id">
+    <meta name="twitter:description" content="Penghitung kata online canggih untuk berbagai format: DOCX, PDF, Gambar (OCR), ZIP, TXT, HTML, RTF, ODT. Hitung kata, karakter, kalimat, paragraf, & waktu baca/bicara instan.">
     <meta name="twitter:image" content="https://word.vinnesia.my.id/logo.png">
     <meta name="twitter:image:alt" content="Logo Vinnesia Word Counter">
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <style>
         :root {
@@ -52,6 +52,7 @@
             --button-hover-primary: #7B4BA6;
             --button-hover-secondary: #3A7A50;
             --error-color: #FF5C5C;
+            --loading-color: #ffe082; /* Warna kuning untuk loading OCR */
         }
 
         * {
@@ -200,6 +201,13 @@
             font-style: italic;
             color: #C0C0C0;
             font-size: 0.9em;
+            display: flex; /* Untuk ikon */
+            align-items: center; /* Untuk ikon */
+            justify-content: center; /* Untuk ikon */
+        }
+
+        #fileNameDisplay.processing {
+            color: var(--loading-color);
         }
 
         #fileError {
@@ -392,7 +400,7 @@
     <header>
         <div class="container">
             <a href="https://www.vinnesia.my.id">
-                <img src="/logo.png" alt="Logo Vinnesia">
+                <img src="logo.png" alt="Logo Vinnesia">
             </a>
             <h1>Penghitung Kata Online</h1>
             <p>Hitung kata, karakter, kalimat, paragraf, dan estimasi waktu baca/bicara Anda!</p>
@@ -403,7 +411,7 @@
     <main>
         <section class="counter-section">
             <div id="uploadArea" class="upload-area">
-                <input type="file" id="fileInput" accept=".txt,.docx,.pdf,.zip" style="display: none;">
+                <input type="file" id="fileInput" accept=".txt,.docx,.pdf,.html,.htm,.rtf,.odt,.jpg,.jpeg,.png,.webp,.zip,.md,.json,.xml" style="display: none;">
                 <p>Seret & Jatuhkan file di sini atau</p>
                 <button id="uploadBtn">Pilih File</button>
                 <div id="fileNameDisplay"></div>
@@ -463,19 +471,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth.js/1.6.0/mammoth.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
     <script>
-        // Set workerSrc for pdf.js. Note: This block needs to be after the pdf.min.mjs import.
-        // The check `typeof pdfjsLib !== 'undefined'` is a safeguard, but standard practice is to set it directly.
-        // For optimal loading, ensure pdf.min.mjs is loaded before trying to set GlobalWorkerOptions.
+        // Set workerSrc for pdf.js. This block needs to be executed after pdf.min.mjs is loaded.
         if (typeof pdfjsLib !== 'undefined') {
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
         } else {
-            // Fallback for environments where pdfjsLib might not be immediately available globally
-            // (e.g., if loaded as a true module and not exposed globally).
-            // A more robust solution for module contexts would be to set this *within* the import chain.
-            // For this single-file HTML, this setup is typically sufficient if the script order is correct.
             console.warn("pdfjsLib is not defined. GlobalWorkerOptions might not be set for PDF.js.");
         }
     </script>
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
     <script>
@@ -498,6 +501,15 @@
             const uploadBtn = document.getElementById('uploadBtn');
             const fileNameDisplay = document.getElementById('fileNameDisplay');
             const fileError = document.getElementById('fileError');
+
+            // Initialize Tesseract worker outside the processing function for better performance
+            let ocrWorker = null;
+            async function initializeOcrWorker() {
+                if (!ocrWorker) {
+                    ocrWorker = await Tesseract.createWorker('eng'); // 'eng' for English, can add 'ind' for Indonesian if needed
+                }
+                return ocrWorker;
+            }
 
             // Set current year in footer
             currentYear.textContent = new Date().getFullYear();
@@ -544,6 +556,7 @@
                     textInput.value = text;
                     updateCounts();
                     fileNameDisplay.textContent = ''; // Clear file name on paste
+                    fileNameDisplay.classList.remove('processing');
                     fileError.style.display = 'none';
                 } catch (err) {
                     alert('Gagal menempel teks. Pastikan Anda memberikan izin akses clipboard.');
@@ -554,6 +567,7 @@
                 textInput.value = '';
                 updateCounts();
                 fileNameDisplay.textContent = ''; // Clear file name on clear
+                fileNameDisplay.classList.remove('processing');
                 fileError.style.display = 'none';
             });
 
@@ -610,8 +624,18 @@ Estimasi Waktu Bicara: ${speakingTime.textContent} menit
                 }
             });
 
+            async function readFileAsText(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = (e) => reject(e);
+                    reader.readAsText(file);
+                });
+            }
+
             async function processFile(file) {
                 fileNameDisplay.textContent = `Memproses: ${file.name} (${(file.size / 1024).toFixed(2)} KB)...`;
+                fileNameDisplay.classList.add('processing'); // Add processing class for visual feedback
                 fileError.style.display = 'none';
                 textInput.value = 'Memuat dan menganalisis file... Mohon tunggu.';
                 updateCounts(); // Update counts to show loading state
@@ -622,22 +646,18 @@ Estimasi Waktu Bicara: ${speakingTime.textContent} menit
                 try {
                     const arrayBuffer = await file.arrayBuffer();
 
-                    if (fileExtension === 'txt') {
+                    if (fileExtension === 'txt' || fileExtension === 'md' || fileExtension === 'json' || fileExtension === 'xml' || fileExtension === 'csv') {
                         const decoder = new TextDecoder('utf-8');
                         extractedText = decoder.decode(arrayBuffer);
                     } else if (fileExtension === 'docx') {
                         const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
-                        extractedText = result.value; // The raw text
+                        extractedText = result.value;
                     } else if (fileExtension === 'pdf') {
-                        // Dynamically import pdfjsLib if it's not globally available.
-                        // This block should only execute if pdfjsLib wasn't loaded by the <script type="module"> tag.
-                        // However, for CDN with `type="module"`, it's generally exposed globally.
                         const pdfjsLibModule = typeof window.pdfjsLib !== 'undefined' ? window.pdfjsLib : await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs');
                         if (pdfjsLibModule && typeof pdfjsLibModule.GlobalWorkerOptions !== 'undefined') {
-                             // Ensure workerSrc is set, as it's crucial for PDF.js to function.
                              pdfjsLibModule.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
                         } else {
-                            throw new Error("PDF.js library or worker options failed to load. Check console for details.");
+                            throw new Error("PDF.js library or worker options failed to load.");
                         }
 
                         const loadingTask = pdfjsLibModule.getDocument({ data: arrayBuffer });
@@ -649,34 +669,95 @@ Estimasi Waktu Bicara: ${speakingTime.textContent} menit
                             fullText += textContent.items.map(item => item.str).join(' ') + '\n';
                         }
                         extractedText = fullText;
+                    } else if (fileExtension === 'html' || fileExtension === 'htm') {
+                        const decoder = new TextDecoder('utf-8');
+                        const htmlContent = decoder.decode(arrayBuffer);
+                        // Create a temporary div to parse HTML and extract text
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = htmlContent;
+                        extractedText = tempDiv.textContent || tempDiv.innerText || '';
+                    } else if (fileExtension === 'rtf') {
+                        // For RTF, we'll try to use a simple text extraction.
+                        // A dedicated RTF parser might be needed for full accuracy,
+                        // but this might get most plain text.
+                        const decoder = new TextDecoder('utf-8');
+                        const rtfContent = decoder.decode(arrayBuffer);
+                        // Simple regex to remove RTF formatting commands
+                        extractedText = rtfContent.replace(/\{\\*?\\[^{}]+}|[{}]|\\([a-zA-Z]+)(\\([a-zA-Z]+))? *|./g, function (match) {
+                            if (match.startsWith('{') || match.startsWith('}')) return ''; // Remove braces
+                            if (match.startsWith('\\')) { // Handle commands
+                                if (match.startsWith('\\par') || match.startsWith('\\line')) return '\n'; // Newline
+                                if (match.startsWith('\\tab')) return '\t'; // Tab
+                                if (match.startsWith('\\' + '\'')) return ''; // Hexadecimal characters
+                                return ''; // Remove other commands
+                            }
+                            return match;
+                        }).replace(/\s+/g, ' ').trim(); // Replace multiple spaces with single
+                    } else if (fileExtension === 'odt') {
+                         // ODT is a ZIP-based format (OpenDocument Text). Extract content.xml
+                        const zip = await JSZip.loadAsync(arrayBuffer);
+                        const contentXml = zip.file("content.xml");
+                        if (contentXml) {
+                            const xmlString = await contentXml.async("text");
+                            const parser = new DOMParser();
+                            const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+                            // Extract text content from common ODT text nodes
+                            extractedText = Array.from(xmlDoc.querySelectorAll('text\\:p, text\\:h, text\\:span, text\\:s')).map(node => node.textContent).join(' ').trim();
+                        } else {
+                            throw new Error('File ODT tidak memiliki content.xml yang diharapkan.');
+                        }
+                    } else if (['jpg', 'jpeg', 'png', 'webp'].includes(fileExtension)) {
+                        const worker = await initializeOcrWorker();
+                        fileNameDisplay.textContent = `Memproses OCR untuk ${file.name}... Ini mungkin memakan waktu.`;
+                        fileNameDisplay.classList.add('processing');
+                        const { data: { text } } = await worker.recognize(file);
+                        extractedText = text;
+                        // ocrWorker.terminate(); // Only terminate if you don't plan to use it again soon
                     } else if (fileExtension === 'zip') {
                         const zip = await JSZip.loadAsync(arrayBuffer);
                         let combinedText = [];
-                        const validTextExtensions = ['.txt', '.md', '.csv']; // Only process these extensions
+                        const textLikeExtensions = ['.txt', '.md', '.csv', '.html', '.htm', '.json', '.xml', '.rtf', '.odt'];
+                        const imageExtensions = ['jpg', 'jpeg', 'png', 'webp'];
 
                         for (const fileName in zip.files) {
-                            const file = zip.files[fileName];
-                            const fileExt = `.${fileName.split('.').pop().toLowerCase()}`;
-                            if (!file.dir && validTextExtensions.includes(fileExt)) {
-                                const fileContent = await file.async('text');
-                                combinedText.push(fileContent);
+                            const fileInZip = zip.files[fileName];
+                            const fileExtInZip = `.${fileName.split('.').pop().toLowerCase()}`;
+
+                            if (!fileInZip.dir) { // Ensure it's a file, not a directory
+                                if (textLikeExtensions.includes(fileExtInZip)) {
+                                    combinedText.push(await fileInZip.async('text'));
+                                } else if (imageExtensions.includes(fileExtInZip)) {
+                                    // Process image in ZIP via OCR
+                                    const imgBlob = await fileInZip.async('blob');
+                                    const worker = await initializeOcrWorker();
+                                    fileNameDisplay.textContent = `Memproses OCR untuk ${fileName} di dalam ZIP...`;
+                                    fileNameDisplay.classList.add('processing');
+                                    const { data: { text } } = await worker.recognize(imgBlob);
+                                    combinedText.push(text);
+                                }
+                                // DOCX and PDF inside ZIP are complex. For simplicity and to avoid deep recursion
+                                // or re-implementing Mammoth/PDF.js logic for blobs/buffers directly,
+                                // we'll skip complex binary files inside ZIP for now, or handle them with specific helper functions if needed.
+                                // Current implementation focuses on extracting text-like files and images from ZIP.
                             }
                         }
-                        extractedText = combinedText.join('\n\n'); // Join with double newline for paragraph separation
+                        extractedText = combinedText.join('\n\n--- FILE DALAM ZIP ---\n\n'); // Separator for clarity
                     } else {
-                        throw new Error('Jenis file tidak didukung. Mohon unggah .txt, .docx, .pdf, atau .zip.');
+                        throw new Error('Jenis file tidak didukung atau tidak dapat diekstrak ke teks. Mohon unggah .txt, .docx, .pdf, .html, .rtf, .odt, gambar, atau .zip.');
                     }
 
                     textInput.value = extractedText;
                     fileNameDisplay.textContent = `File diunggah: ${file.name}`;
+                    fileNameDisplay.classList.remove('processing'); // Remove processing class
                     updateCounts();
 
                 } catch (error) {
                     console.error('Error processing file:', error);
-                    fileError.textContent = `Error: ${error.message}`;
+                    fileError.textContent = `File tidak dapat diekstrak ke teks. Error: ${error.message || 'Unknown error'}`;
                     fileError.style.display = 'block';
                     textInput.value = ''; // Clear textarea on error
                     fileNameDisplay.textContent = '';
+                    fileNameDisplay.classList.remove('processing');
                     updateCounts(); // Reset counts
                 }
             }
