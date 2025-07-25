@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penghitung Kata Online - Hitung Kata, Karakter, Kalimat, Paragraf, Waktu Baca & Bicara | Word.Vinnesia.my.id</title>
+    <meta name="description" content="Penghitung Kata Online gratis untuk menghitung jumlah kata, karakter (dengan/tanpa spasi), kalimat, paragraf, serta estimasi waktu membaca dan berbicara secara real-time. Cepat dan akurat!">
+    <meta name="keywords" content="penghitung kata, word counter, hitung kata online, hitung karakter, hitung kalimat, hitung paragraf, waktu baca, waktu bicara, tool gratis, vinnesia.my.id">
+    <link rel="canonical" href="https://word.vinnesia.my.id/">
+
+    <meta property="og:title" content="Penghitung Kata Online - Hitung Kata, Karakter, Kalimat, Paragraf, Waktu Baca & Bicara | Word.Vinnesia.my.id">
+    <meta property="og:description" content="Penghitung Kata Online gratis untuk menghitung jumlah kata, karakter (dengan/tanpa spasi), kalimat, paragraf, serta estimasi waktu membaca dan berbicara secara real-time. Cepat dan akurat!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://word.vinnesia.my.id/">
+    <meta property="og:image" content="https://word.vinnesia.my.id/logo.png">
+    <meta property="og:image:alt" content="Logo Vinnesia Word Counter">
+    <meta property="og:site_name" content="Vinnesia Word Counter">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <style>
+        :root {
+            --primary-color: #5C2D91; /* Ungu */
+            --secondary-color: #2D5C40; /* Hijau kehitaman */
+            --text-color: #E0E0E0;
+            --background-color: #1A1A1A;
+            --card-background: #282828;
+            --border-color: #444;
+            --button-hover-primary: #7B4BA6;
+            --button-hover-secondary: #3A7A50;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        header .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header img {
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border: 1px solid white;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        header a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .counter-section {
+            background-color: var(--card-background);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 250px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #333;
+            color: var(--text-color);
+            font-size: 1.1em;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(92, 45, 145, 0.5);
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .button-group button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            flex-grow: 1;
+            max-width: 180px;
+        }
+
+        .button-group button:hover {
+            background-color: var(--button-hover-secondary);
+            transform: translateY(-2px);
+        }
+
+        .button-group button:active {
+            transform: translateY(0);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .result-item {
+            background-color: #3A3A3A;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .result-item h3 {
+            font-size: 1.1em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .result-item p {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #E0E0E0;
+            margin: 0;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+            margin: 0 5px;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #D1BDE9;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            header p {
+                font-size: 1em;
+            }
+
+            .counter-section {
+                padding: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .button-group button {
+                max-width: 100%;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header img {
+                height: 40px;
+            }
+
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            main {
+                padding: 10px;
+            }
+
+            textarea {
+                min-height: 200px;
+                font-size: 1em;
+            }
+
+            .button-group button {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+
+            .result-item h3 {
+                font-size: 1em;
+            }
+
+            .result-item p {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="https://www.vinnesia.my.id">
+                <img src="logo.png" alt="Logo Vinnesia">
+            </a>
+            <h1>Penghitung Kata Online</h1>
+            <p>Hitung kata, karakter, kalimat, paragraf, dan estimasi waktu baca/bicara Anda!</p>
+            <a href="https://www.vinnesia.my.id">Kembali ke Homepage</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="counter-section">
+            <textarea id="textInput" placeholder="Ketik atau tempel teks Anda di sini..."></textarea>
+
+            <div class="button-group">
+                <button id="pasteBtn">Tempel</button>
+                <button id="clearBtn">Bersihkan</button>
+                <button id="copyBtn">Salin Hasil</button>
+            </div>
+
+            <div class="results-grid">
+                <div class="result-item">
+                    <h3>Jumlah Kata</h3>
+                    <p id="wordCount">0</p>
+                </div>
+                <div class="result-item">
+                    <h3>Karakter (dengan spasi)</h3>
+                    <p id="charCountWithSpaces">0</p>
+                </div>
+                <div class="result-item">
+                    <h3>Karakter (tanpa spasi)</h3>
+                    <p id="charCountNoSpaces">0</p>
+                </div>
+                <div class="result-item">
+                    <h3>Jumlah Kalimat</h3>
+                    <p id="sentenceCount">0</p>
+                </div>
+                <div class="result-item">
+                    <h3>Jumlah Paragraf</h3>
+                    <p id="paragraphCount">0</p>
+                </div>
+                <div class="result-item">
+                    <h3>Waktu Baca (menit)</h3>
+                    <p id="readingTime">0</p>
+                </div>
+                <div class="result-item">
+                    <h3>Waktu Bicara (menit)</h3>
+                    <p id="speakingTime">0</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Vinnesia.my.id. Semua Hak Dilindungi.</p>
+            <p>
+                <a href="https://www.vinnesia.my.id/privacy">Kebijakan Privasi</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textInput = document.getElementById('textInput');
+            const wordCount = document.getElementById('wordCount');
+            const charCountWithSpaces = document.getElementById('charCountWithSpaces');
+            const charCountNoSpaces = document.getElementById('charCountNoSpaces');
+            const sentenceCount = document.getElementById('sentenceCount');
+            const paragraphCount = document.getElementById('paragraphCount');
+            const readingTime = document.getElementById('readingTime');
+            const speakingTime = document.getElementById('speakingTime');
+            const pasteBtn = document.getElementById('pasteBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const currentYear = document.getElementById('currentYear');
+
+            // Set current year in footer
+            currentYear.textContent = new Date().getFullYear();
+
+            // Function to update all counts
+            function updateCounts() {
+                const text = textInput.value;
+
+                // Word Count
+                const words = text.match(/\b\w+\b/g);
+                const numWords = words ? words.length : 0;
+                wordCount.textContent = numWords;
+
+                // Character Count (with spaces)
+                charCountWithSpaces.textContent = text.length;
+
+                // Character Count (no spaces)
+                charCountNoSpaces.textContent = text.replace(/\s/g, '').length;
+
+                // Sentence Count
+                const sentences = text.split(/[.!?]+/).filter(s => s.trim() !== '');
+                sentenceCount.textContent = sentences.length;
+
+                // Paragraph Count
+                const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim() !== '');
+                paragraphCount.textContent = paragraphs.length;
+
+                // Reading Time (average 200 words per minute)
+                const readingMinutes = numWords > 0 ? Math.ceil(numWords / 200) : 0;
+                readingTime.textContent = readingMinutes;
+
+                // Speaking Time (average 130 words per minute)
+                const speakingMinutes = numWords > 0 ? Math.ceil(numWords / 130) : 0;
+                speakingTime.textContent = speakingMinutes;
+            }
+
+            // Real-time update on input
+            textInput.addEventListener('input', updateCounts);
+
+            // Paste button functionality
+            pasteBtn.addEventListener('click', async () => {
+                try {
+                    const text = await navigator.clipboard.readText();
+                    textInput.value = text;
+                    updateCounts();
+                } catch (err) {
+                    alert('Gagal menempel teks. Pastikan Anda memberikan izin akses clipboard.');
+                }
+            });
+
+            // Clear button functionality
+            clearBtn.addEventListener('click', () => {
+                textInput.value = '';
+                updateCounts();
+            });
+
+            // Copy results button functionality
+            copyBtn.addEventListener('click', async () => {
+                const resultsText = `
+Hasil Penghitung Kata:
+----------------------
+Jumlah Kata: ${wordCount.textContent}
+Karakter (dengan spasi): ${charCountWithSpaces.textContent}
+Karakter (tanpa spasi): ${charCountNoSpaces.textContent}
+Jumlah Kalimat: ${sentenceCount.textContent}
+Jumlah Paragraf: ${paragraphCount.textContent}
+Estimasi Waktu Baca: ${readingTime.textContent} menit
+Estimasi Waktu Bicara: ${speakingTime.textContent} menit
+                `.trim();
+
+                try {
+                    await navigator.clipboard.writeText(resultsText);
+                    alert('Hasil berhasil disalin ke clipboard!');
+                } catch (err) {
+                    alert('Gagal menyalin hasil. Pastikan Anda memberikan izin akses clipboard.');
+                }
+            });
+
+            // Initial update on page load
+            updateCounts();
+        });
+    </script>
+</body>
+</html>
