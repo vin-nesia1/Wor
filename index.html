@@ -3,33 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penghitung Kata Online - Hitung Kata, Karakter, Kalimat, Paragraf, Waktu Baca & Bicara | Word.Vinnesia.my.id</title>
-    <meta name="description" content="Penghitung Kata Online gratis untuk menghitung jumlah kata, karakter (dengan/tanpa spasi), kalimat, paragraf, serta estimasi waktu membaca dan berbicara secara real-time. Cepat dan akurat!">
-    <meta name="keywords" content="penghitung kata, word counter, hitung kata online, hitung karakter, hitung kalimat, hitung paragraf, waktu baca, waktu bicara, tool gratis, vinnesia.my.id">
-    <link rel="canonical" href="https://word.vinnesia.my.id/">
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PYZXZFNER"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-    <meta property="og:title" content="Penghitung Kata Online - Hitung Kata, Karakter, Kalimat, Paragraf, Waktu Baca & Bicara | Word.Vinnesia.my.id">
-    <meta property="og:description" content="Penghitung Kata Online gratis untuk menghitung jumlah kata, karakter (dengan/tanpa spasi), kalimat, paragraf, serta estimasi waktu membaca dan berbicara secara real-time. Cepat dan akurat!">
+      gtag('config', 'G-3PYZXZFNER');
+    </script>
+
+    <title>Penghitung Kata Online Gratis: DOCX, PDF, TXT, ZIP | Word.Vinnesia.my.id</title>
+    <meta name="description" content="Penghitung kata online instan untuk DOCX, PDF, TXT, & ZIP. Hitung kata, karakter (dengan/tanpa spasi), kalimat, paragraf, serta estimasi waktu baca & bicara cepat.">
+    <meta name="keywords" content="penghitung kata online, word counter, hitung kata, hitung karakter, hitung kalimat, hitung paragraf, waktu baca, waktu bicara, upload file, hitung DOCX, hitung PDF, hitung TXT, hitung ZIP, alat gratis, Vinnesia, Vinnesia Word Counter">
+    <meta name="author" content="Vinnesia">
+    <link rel="canonical" href="https://word.vinnesia.my.id">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="Penghitung Kata Online Gratis: DOCX, PDF, TXT, ZIP | Word.Vinnesia.my.id">
+    <meta property="og:description" content="Penghitung kata online instan untuk DOCX, PDF, TXT, & ZIP. Hitung kata, karakter (dengan/tanpa spasi), kalimat, paragraf, serta estimasi waktu baca & bicara cepat.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://word.vinnesia.my.id/">
+    <meta property="og:url" content="https://word.vinnesia.my.id">
     <meta property="og:image" content="https://word.vinnesia.my.id/logo.png">
     <meta property="og:image:alt" content="Logo Vinnesia Word Counter">
     <meta property="og:site_name" content="Vinnesia Word Counter">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Penghitung Kata Online Gratis: DOCX, PDF, TXT, ZIP | Word.Vinnesia.my.id">
+    <meta name="twitter:description" content="Penghitung kata online instan untuk DOCX, PDF, TXT, & ZIP. Hitung kata, karakter (dengan/tanpa spasi), kalimat, paragraf, serta estimasi waktu baca & bicara cepat.">
+    <meta name="twitter:image" content="https://word.vinnesia.my.id/logo.png">
+    <meta name="twitter:image:alt" content="Logo Vinnesia Word Counter">
 
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
     <style>
         :root {
-            --primary-color: #5C2D91; /* Ungu */
-            --secondary-color: #2D5C40; /* Hijau kehitaman */
+            --primary-color: #5C2D91; /* Ungu gelap Vinnesia */
+            --secondary-color: #2D5C40; /* Hijau kehitaman Vinnesia */
             --text-color: #FFFFFF; /* Putih */
-            --background-left: #2D5C40; /* Hijau kehitaman untuk kiri */
-            --background-right: #5C2D91; /* Ungu untuk kanan */
+            --light-purple: #7B4BA6; /* Ungu sedang */
+            --dark-green: #1F3F2D; /* Hijau gelap */
+            --bg-start-color: #2D5C40; /* Hijau kehitaman */
+            --bg-end-color: #5C2D91; /* Ungu gelap */
+
             --card-background: rgba(0, 0, 0, 0.6); /* Sedikit transparan agar background terlihat */
             --border-color: #666;
             --button-hover-primary: #7B4BA6;
             --button-hover-secondary: #3A7A50;
+            --error-color: #FF5C5C;
         }
 
         * {
@@ -40,23 +62,37 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, var(--background-left) 50%, var(--background-right) 50%);
+            background: linear-gradient(135deg, var(--bg-start-color), var(--bg-end-color)); /* Gradient diagonal */
             color: var(--text-color);
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            position: relative; /* Untuk pseudo-element background */
+            position: relative;
+            overflow-x: hidden; /* Mencegah scroll horizontal */
         }
 
-        /* Override body background color for header and footer to maintain solid color */
+        /* Overlay untuk memberikan tekstur/kedalaman */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.05), transparent 60%),
+                        radial-gradient(circle at bottom right, rgba(0,0,0,0.1), transparent 60%);
+            pointer-events: none; /* Agar tidak mengganggu interaksi */
+            z-index: 1;
+        }
+
         header, footer {
-            background-color: var(--primary-color); /* Kembali ke ungu solid */
+            background-color: var(--primary-color); /* Ungu solid */
             color: white;
             padding: 1rem 0;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 10; /* Pastikan di atas background */
+            z-index: 10;
         }
 
         header .container {
@@ -105,16 +141,72 @@
             margin: 0 auto;
             width: 100%;
             padding: 20px;
-            z-index: 5; /* Pastikan di atas background tapi di bawah header/footer */
+            z-index: 5;
+            position: relative;
         }
 
         .counter-section {
-            background-color: var(--card-background); /* Menggunakan card-background yang sedikit transparan */
+            background-color: var(--card-background);
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px); /* Efek blur pada latar belakang elemen ini */
-            -webkit-backdrop-filter: blur(5px); /* Untuk kompatibilitas Safari */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .upload-area:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: var(--primary-color);
+        }
+
+        .upload-area.dragover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--light-purple);
+        }
+
+        .upload-area p {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .upload-area button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-area button:hover {
+            background-color: var(--button-hover-primary);
+        }
+
+        #fileNameDisplay {
+            margin-top: 10px;
+            font-style: italic;
+            color: #C0C0C0;
+            font-size: 0.9em;
+        }
+
+        #fileError {
+            color: var(--error-color);
+            margin-top: 10px;
+            font-weight: bold;
+            display: none; /* Sembunyikan secara default */
         }
 
         textarea {
@@ -124,7 +216,7 @@
             margin-bottom: 20px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            background-color: rgba(0, 0, 0, 0.4); /* Background textarea sedikit transparan gelap */
+            background-color: rgba(0, 0, 0, 0.4);
             color: var(--text-color);
             font-size: 1.1em;
             resize: vertical;
@@ -175,7 +267,7 @@
         }
 
         .result-item {
-            background-color: rgba(0, 0, 0, 0.5); /* Background hasil sedikit transparan gelap */
+            background-color: rgba(0, 0, 0, 0.5);
             padding: 20px;
             border-radius: 8px;
             text-align: center;
@@ -188,14 +280,14 @@
 
         .result-item h3 {
             font-size: 1.1em;
-            color: var(--primary-color); /* Warna ungu untuk judul hasil */
+            color: var(--primary-color);
             margin-bottom: 10px;
         }
 
         .result-item p {
             font-size: 1.8em;
             font-weight: bold;
-            color: var(--text-color); /* Teks hasil tetap putih */
+            color: var(--text-color);
             margin: 0;
         }
 
@@ -258,9 +350,8 @@
                 grid-template-columns: 1fr;
             }
 
-            /* Untuk mobile, background gradient bisa jadi vertikal atau tetap horizontal tapi lebih kecil */
             body {
-                background: linear-gradient(to bottom, var(--background-left) 50%, var(--background-right) 50%);
+                background: linear-gradient(135deg, var(--bg-start-color), var(--bg-end-color));
             }
         }
 
@@ -301,7 +392,7 @@
     <header>
         <div class="container">
             <a href="https://www.vinnesia.my.id">
-                <img src="logo.png" alt="Logo Vinnesia">
+                <img src="/logo.png" alt="Logo Vinnesia">
             </a>
             <h1>Penghitung Kata Online</h1>
             <p>Hitung kata, karakter, kalimat, paragraf, dan estimasi waktu baca/bicara Anda!</p>
@@ -311,6 +402,14 @@
 
     <main>
         <section class="counter-section">
+            <div id="uploadArea" class="upload-area">
+                <input type="file" id="fileInput" accept=".txt,.docx,.pdf,.zip" style="display: none;">
+                <p>Seret & Jatuhkan file di sini atau</p>
+                <button id="uploadBtn">Pilih File</button>
+                <div id="fileNameDisplay"></div>
+                <div id="fileError" style="color: var(--error-color); margin-top: 10px; display: none;"></div>
+            </div>
+
             <textarea id="textInput" placeholder="Ketik atau tempel teks Anda di sini..."></textarea>
 
             <div class="button-group">
@@ -361,6 +460,24 @@
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth.js/1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+    <script>
+        // Set workerSrc for pdf.js. Note: This block needs to be after the pdf.min.mjs import.
+        // The check `typeof pdfjsLib !== 'undefined'` is a safeguard, but standard practice is to set it directly.
+        // For optimal loading, ensure pdf.min.mjs is loaded before trying to set GlobalWorkerOptions.
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
+        } else {
+            // Fallback for environments where pdfjsLib might not be immediately available globally
+            // (e.g., if loaded as a true module and not exposed globally).
+            // A more robust solution for module contexts would be to set this *within* the import chain.
+            // For this single-file HTML, this setup is typically sufficient if the script order is correct.
+            console.warn("pdfjsLib is not defined. GlobalWorkerOptions might not be set for PDF.js.");
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const textInput = document.getElementById('textInput');
@@ -376,10 +493,16 @@
             const copyBtn = document.getElementById('copyBtn');
             const currentYear = document.getElementById('currentYear');
 
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+            const fileError = document.getElementById('fileError');
+
             // Set current year in footer
             currentYear.textContent = new Date().getFullYear();
 
-            // Function to update all counts
+            // --- Core Counting Logic ---
             function updateCounts() {
                 const text = textInput.value;
 
@@ -414,24 +537,26 @@
             // Real-time update on input
             textInput.addEventListener('input', updateCounts);
 
-            // Paste button functionality
+            // --- Button Functionality ---
             pasteBtn.addEventListener('click', async () => {
                 try {
                     const text = await navigator.clipboard.readText();
                     textInput.value = text;
                     updateCounts();
+                    fileNameDisplay.textContent = ''; // Clear file name on paste
+                    fileError.style.display = 'none';
                 } catch (err) {
                     alert('Gagal menempel teks. Pastikan Anda memberikan izin akses clipboard.');
                 }
             });
 
-            // Clear button functionality
             clearBtn.addEventListener('click', () => {
                 textInput.value = '';
                 updateCounts();
+                fileNameDisplay.textContent = ''; // Clear file name on clear
+                fileError.style.display = 'none';
             });
 
-            // Copy results button functionality
             copyBtn.addEventListener('click', async () => {
                 const resultsText = `
 Hasil Penghitung Kata:
@@ -452,6 +577,109 @@ Estimasi Waktu Bicara: ${speakingTime.textContent} menit
                     alert('Gagal menyalin hasil. Pastikan Anda memberikan izin akses clipboard.');
                 }
             });
+
+            // --- File Upload Logic ---
+            uploadBtn.addEventListener('click', () => {
+                fileInput.click(); // Trigger file input click
+            });
+
+            fileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    processFile(file);
+                }
+                event.target.value = ''; // Clear the input so same file can be uploaded again
+            });
+
+            // Drag & Drop functionality
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const file = e.dataTransfer.files[0];
+                if (file) {
+                    processFile(file);
+                }
+            });
+
+            async function processFile(file) {
+                fileNameDisplay.textContent = `Memproses: ${file.name} (${(file.size / 1024).toFixed(2)} KB)...`;
+                fileError.style.display = 'none';
+                textInput.value = 'Memuat dan menganalisis file... Mohon tunggu.';
+                updateCounts(); // Update counts to show loading state
+
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                let extractedText = '';
+
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+
+                    if (fileExtension === 'txt') {
+                        const decoder = new TextDecoder('utf-8');
+                        extractedText = decoder.decode(arrayBuffer);
+                    } else if (fileExtension === 'docx') {
+                        const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+                        extractedText = result.value; // The raw text
+                    } else if (fileExtension === 'pdf') {
+                        // Dynamically import pdfjsLib if it's not globally available.
+                        // This block should only execute if pdfjsLib wasn't loaded by the <script type="module"> tag.
+                        // However, for CDN with `type="module"`, it's generally exposed globally.
+                        const pdfjsLibModule = typeof window.pdfjsLib !== 'undefined' ? window.pdfjsLib : await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs');
+                        if (pdfjsLibModule && typeof pdfjsLibModule.GlobalWorkerOptions !== 'undefined') {
+                             // Ensure workerSrc is set, as it's crucial for PDF.js to function.
+                             pdfjsLibModule.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
+                        } else {
+                            throw new Error("PDF.js library or worker options failed to load. Check console for details.");
+                        }
+
+                        const loadingTask = pdfjsLibModule.getDocument({ data: arrayBuffer });
+                        const pdf = await loadingTask.promise;
+                        let fullText = '';
+                        for (let i = 1; i <= pdf.numPages; i++) {
+                            const page = await pdf.getPage(i);
+                            const textContent = await page.getTextContent();
+                            fullText += textContent.items.map(item => item.str).join(' ') + '\n';
+                        }
+                        extractedText = fullText;
+                    } else if (fileExtension === 'zip') {
+                        const zip = await JSZip.loadAsync(arrayBuffer);
+                        let combinedText = [];
+                        const validTextExtensions = ['.txt', '.md', '.csv']; // Only process these extensions
+
+                        for (const fileName in zip.files) {
+                            const file = zip.files[fileName];
+                            const fileExt = `.${fileName.split('.').pop().toLowerCase()}`;
+                            if (!file.dir && validTextExtensions.includes(fileExt)) {
+                                const fileContent = await file.async('text');
+                                combinedText.push(fileContent);
+                            }
+                        }
+                        extractedText = combinedText.join('\n\n'); // Join with double newline for paragraph separation
+                    } else {
+                        throw new Error('Jenis file tidak didukung. Mohon unggah .txt, .docx, .pdf, atau .zip.');
+                    }
+
+                    textInput.value = extractedText;
+                    fileNameDisplay.textContent = `File diunggah: ${file.name}`;
+                    updateCounts();
+
+                } catch (error) {
+                    console.error('Error processing file:', error);
+                    fileError.textContent = `Error: ${error.message}`;
+                    fileError.style.display = 'block';
+                    textInput.value = ''; // Clear textarea on error
+                    fileNameDisplay.textContent = '';
+                    updateCounts(); // Reset counts
+                }
+            }
 
             // Initial update on page load
             updateCounts();
